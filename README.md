@@ -22,3 +22,11 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# 移动端响应设置
+document.addEventerliser('DOMContentLoaded', () => {
+    const html = document.querySelector('html')
+    let fontSize = window.innerWidth / 10
+    fontSize = fontSize > 50 ? 50 : fontSize
+    html.style.fontSize = fontSize + 'px'
+})

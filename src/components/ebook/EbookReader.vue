@@ -6,14 +6,15 @@
 
 <script>
   import Epub from 'epubjs'
+  import { ebookMixin } from '@/utils/mixin'
 
   global.ePub = Epub
 
   export default {
     name: 'ebook-reader',
+    mixins: [ebookMixin],
     mounted() {
-      const books = this.$route.params.fileName.split('|').join('/')
-      console.log(books)
+      this.setFileName(this.$route.params.fileName.split('|').join('/'))
     }
   }
 </script>

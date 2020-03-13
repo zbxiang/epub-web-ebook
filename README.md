@@ -30,3 +30,40 @@ document.addEventerliser('DOMContentLoaded', () => {
     fontSize = fontSize > 50 ? 50 : fontSize
     html.style.fontSize = fontSize + 'px'
 })
+
+# store
+store/modules/book.js
+const books = {
+    state: {
+        fileName: ''
+    },
+    mutations: {
+        SETFILENAME => (state, fileName) {
+            state.fileName = fileName
+        }
+    }
+}
+export default books
+
+store/actions.js
+const actions = {
+    setFileName: ({ commit }, visible) => {
+        return commit('SET_FILENAME', fileName)
+    }
+}
+export default actions
+
+store/getters.js
+const getters = {
+    fileName: state => state.book.fileName
+}
+export default getters
+
+store/index.js
+export default new Vuex.Store({
+    modules: {
+        book
+    },
+    getters,
+    actions
+})

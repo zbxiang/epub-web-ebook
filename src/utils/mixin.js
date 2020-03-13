@@ -3,12 +3,14 @@ import { mapGetters, mapActions } from 'vuex'
 export const ebookMixin = {
   computed: {
     ...mapGetters([
-      'fileName'
+      'fileName',
+      'currentBook'
     ])
   },
   methods: {
     ...mapActions([
-      'setFileName'
+      'setFileName',
+      'setCurrentBook'
     ])
   }
 }

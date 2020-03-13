@@ -72,7 +72,9 @@
           this.rendition.next()
         }
       },
-      toggleTitleAndMenu() {}
+      toggleTitleAndMenu() {
+        this.setMenuVisible(!this.menuVisible)
+      }
     }
   }
 </script>

@@ -26,6 +26,14 @@ export function saveLocale(locale) {
   return setLocalStorage('locale', locale)
 }
 
+export function saveLocation(fileName, location) {
+  setBookObject(fileName, 'location', location)
+}
+
+export function getReadTime(fileName) {
+  return getBookObject(fileName, 'time')
+}
+
 export function saveFontSize(fileName, fontSize) {
   setBookObject(fileName, 'fontSize', fontSize)
 }

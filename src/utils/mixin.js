@@ -3,8 +3,11 @@ import { mapGetters, mapActions } from 'vuex'
 import {
   themeList,
   addCss,
-  removeAllCss
+  removeAllCss,
+  getReadTimeByMinute
 } from './book'
+
+import { saveLocation } from '@/utils/localStorage'
 
 export const ebookMixin = {
   computed: {
@@ -16,7 +19,10 @@ export const ebookMixin = {
       'defaultFontSize',
       'defaultFontFamily',
       'fontFamilyVisible',
-      'defaultTheme'
+      'defaultTheme',
+      'bookAvailable',
+      'progress',
+      'section'
     ]),
     themeList() {
       return themeList(this)
@@ -31,7 +37,10 @@ export const ebookMixin = {
       'setDefaultFontSize',
       'setDefaultFontFamily',
       'setFontFamilyVisible',
-      'setDefaultTheme'
+      'setDefaultTheme',
+      'setBookAvailable',
+      'setProgress',
+      'setSection'
     ]),
     initGlobalStyle() {
       removeAllCss()
@@ -52,6 +61,32 @@ export const ebookMixin = {
           addCss(`${process.env.VUE_APP_RES_URL}theme/theme_default.css`)
           break
       }
+    },
+    refreshLocation() {
+      const currentLocation = this.currentBook.rendition.currentLocation()
+      if (currentLocation && currentLocation.start) {
+        const startCfi = currentLocation.start.cfi
+        const progress = this.currentBook.locations.percentageFromCfi(startCfi)
+        this.setProgress(Math.floor(progress * 100))
+        this.setSection(currentLocation.start.index)
+        saveLocation(this.fileName, startCfi)
+      }
+    },
+    display(target, cb) {
+      if (target) {
+        this.currentBook.rendition.display(target).then(() => {
+          this.refreshLocation()
+          if (cb) cb()
+        })
+      } else {
+        this.currentBook.rendition.display().then(() => {
+          this.refreshLocation()
+          if (cb) cb()
+        })
+      }
+    },
+    getReadTimeText() {
+      return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))
     }
   }
 }

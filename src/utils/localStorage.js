@@ -34,6 +34,22 @@ export function saveFontFamily(fileName, fontFamily) {
   setBookObject(fileName, 'fontFamily', fontFamily)
 }
 
+export function getTheme(fileName) {
+  return getBookObject(fileName, 'theme')
+}
+
+export function saveTheme(fileName, theme) {
+  setBookObject(fileName, 'theme', theme)
+}
+
+export function getBookObject(fileName, key) {
+  if (getLocalStorage(`${fileName}-info`)) {
+    return getLocalStorage(`${fileName}-info`)[key]
+  } else {
+    return null
+  }
+}
+
 export function setBookObject(fileName, key, value) {
   let book = {}
   if (getLocalStorage(`${fileName}-info`)) {

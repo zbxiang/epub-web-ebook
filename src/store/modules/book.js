@@ -2,7 +2,8 @@ const book = {
   state: {
     fileName: '',
     menuVisible: false,
-    currentBook: null
+    currentBook: null,
+    settingVisible: -1
   },
   mutations: {
     SET_FILENAME: (state, fileName) => {
@@ -13,6 +14,9 @@ const book = {
     },
     SET_CURRENT_BOOK: (state, currentBook) => {
       state.currentBook = currentBook
+    },
+    SET_SETTING_VISIBLE: (state, settingVisible) => {
+      state.settingVisible = settingVisible
     }
   }
 }

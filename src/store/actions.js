@@ -7,6 +7,9 @@ const actions = {
   },
   setMenuVisible: ({ commit }, visible) => {
     return commit('SET_MENU_VISIBLE', visible)
+  },
+  setSettingVisible: ({ commit }, setSettingVisible) => {
+    return commit('SET_SETTING_VISIBLE', setSettingVisible)
   }
 }
 

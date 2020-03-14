@@ -22,6 +22,10 @@ export function saveFontSize(fileName, fontSize) {
   setBookObject(fileName, 'fontSize', fontSize)
 }
 
+export function saveFontFamily(fileName, fontFamily) {
+  setBookObject(fileName, 'fontFamily', fontFamily)
+}
+
 export function setBookObject(fileName, key, value) {
   let book = {}
   if (getLocalStorage(`${fileName}-info`)) {

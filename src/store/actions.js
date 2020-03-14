@@ -13,6 +13,12 @@ const actions = {
   },
   setDefaultFontSize: ({ commit }, defaultFontSize) => {
     return commit('SET_DEFAULT_FONT_SIZE', defaultFontSize)
+  },
+  setDefaultFontFamily: ({ commit }, defaultFontFamily) => {
+    return commit('SET_DEFAULT_FONT_FAMILY', defaultFontFamily)
+  },
+  setFontFamilyVisible: ({ commit }, visible) => {
+    return commit('SET_FONT_FAMILY_VISIBLE', visible)
   }
 }
 

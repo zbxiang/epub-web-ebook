@@ -10,6 +10,9 @@ const actions = {
   },
   setSettingVisible: ({ commit }, setSettingVisible) => {
     return commit('SET_SETTING_VISIBLE', setSettingVisible)
+  },
+  setDefaultFontSize: ({ commit }, defaultFontSize) => {
+    return commit('SET_DEFAULT_FONT_SIZE', defaultFontSize)
   }
 }
 

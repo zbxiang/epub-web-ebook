@@ -18,6 +18,14 @@ export function clearLocalStorage() {
   return localStorage.clear()
 }
 
+export function getLocale() {
+  return getLocalStorage('locale')
+}
+
+export function saveLocale(locale) {
+  return setLocalStorage('locale', locale)
+}
+
 export function saveFontSize(fileName, fontSize) {
   setBookObject(fileName, 'fontSize', fontSize)
 }

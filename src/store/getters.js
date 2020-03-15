@@ -13,7 +13,8 @@ const getters = {
   navigation: state => state.book.navigation,
   cover: state => state.book.cover,
   metadata: state => state.book.metadata,
-  offsetY: state => state.book.offsetY
+  offsetY: state => state.book.offsetY,
+  isBookmark: state => state.book.isBookmark
 }
 
 export default getters

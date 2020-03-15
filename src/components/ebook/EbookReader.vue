@@ -12,7 +12,9 @@
     getFontSize,
     getTheme,
     saveTheme,
-    saveFontSize
+    saveFontSize,
+    getFontFamily,
+    saveFontFamily
   } from '@/utils/localStorage'
 
   global.ePub = Epub
@@ -49,7 +51,7 @@
         this.display(location, () => {
           this.initTheme()
           this.initFontSize()
-          // this.initFontFamily()
+          this.initFontFamily()
           // this.initGlobalStyle()
         })
         this.rendition.hooks.content.register(contents => {
@@ -81,6 +83,15 @@
         } else {
           this.rendition.themes.fontSize(fontSize)
           this.setDefaultFontSize(fontSize)
+        }
+      },
+      initFontFamily() {
+        const font = getFontFamily(this.fileName)
+        if (!font) {
+          saveFontFamily(this.fileName, this.defaultFontFamily)
+        } else {
+          this.rendition.themes.font(font)
+          this.setDefaultFontFamily(font)
         }
       },
       initGesture() {

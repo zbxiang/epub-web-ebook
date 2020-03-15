@@ -31,7 +31,7 @@ export function getLocation(fileName) {
 }
 
 export function saveLocation(fileName, location) {
-  setBookObject(fileName, 'location', location)
+  return setBookObject(fileName, 'location', location)
 }
 
 export function getReadTime(fileName) {
@@ -39,15 +39,19 @@ export function getReadTime(fileName) {
 }
 
 export function saveReadTime(fileName, theme) {
-  setBookObject(fileName, 'time', theme)
+  return setBookObject(fileName, 'time', theme)
 }
 
 export function saveFontSize(fileName, fontSize) {
-  setBookObject(fileName, 'fontSize', fontSize)
+  return setBookObject(fileName, 'fontSize', fontSize)
+}
+
+export function getFontFamily(fileName) {
+  return getBookObject(fileName, 'fontFamily')
 }
 
 export function saveFontFamily(fileName, fontFamily) {
-  setBookObject(fileName, 'fontFamily', fontFamily)
+  return setBookObject(fileName, 'fontFamily', fontFamily)
 }
 
 export function getTheme(fileName) {
@@ -55,7 +59,7 @@ export function getTheme(fileName) {
 }
 
 export function saveTheme(fileName, theme) {
-  setBookObject(fileName, 'theme', theme)
+  return setBookObject(fileName, 'theme', theme)
 }
 
 export function getFontSize(fileName) {

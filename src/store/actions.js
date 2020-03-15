@@ -40,6 +40,9 @@ const actions = {
   },
   setMetadata: ({ commit }, metadata) => {
     return commit('SET_METADATA', metadata)
+  },
+  setOffsetY({ commit }, offsetY) {
+    return commit('SET_OFFSETY', offsetY)
   }
 }
 

@@ -12,7 +12,8 @@ const getters = {
   section: state => state.book.section,
   navigation: state => state.book.navigation,
   cover: state => state.book.cover,
-  metadata: state => state.book.metadata
+  metadata: state => state.book.metadata,
+  offsetY: state => state.book.offsetY
 }
 
 export default getters

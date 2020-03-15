@@ -22,7 +22,10 @@ export const ebookMixin = {
       'defaultTheme',
       'bookAvailable',
       'progress',
-      'section'
+      'section',
+      'navigation',
+      'cover',
+      'metadata'
     ]),
     themeList() {
       return themeList(this)
@@ -40,7 +43,10 @@ export const ebookMixin = {
       'setDefaultTheme',
       'setBookAvailable',
       'setProgress',
-      'setSection'
+      'setSection',
+      'setNavigation',
+      'setCover',
+      'setMetadata'
     ]),
     initGlobalStyle() {
       removeAllCss()
@@ -84,6 +90,11 @@ export const ebookMixin = {
           if (cb) cb()
         })
       }
+    },
+    hideTitleAndMenu() {
+      this.setMenuVisible(false)
+      this.setSettingVisible(-1)
+      this.setFontFamilyVisible(false)
     },
     getReadTimeText() {
       return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))

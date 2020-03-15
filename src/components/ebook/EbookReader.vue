@@ -16,6 +16,7 @@
     getFontFamily,
     saveFontFamily
   } from '@/utils/localStorage'
+  import { flatten } from '@/utils/book'
 
   global.ePub = Epub
 
@@ -38,6 +39,7 @@
           return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
         }).then(locations => {
           this.setBookAvailable(true)
+          this.parseBook()
           this.refreshLocation()
         })
       },
@@ -52,11 +54,13 @@
           this.initTheme()
           this.initFontSize()
           this.initFontFamily()
-          // this.initGlobalStyle()
+          this.initGlobalStyle()
         })
         this.rendition.hooks.content.register(contents => {
+          if (contents.document.querySelector('.container')) {
+            contents.document.querySelector('.container').setAttribute('style', 'padding: 0')
+          }
           Promise.all([
-            contents.document.querySelector('.container').setAttribute('style', 'padding: 0'),
             contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`),
             contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`),
             contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`),
@@ -113,18 +117,49 @@
           event.stopPropagation()
         })
       },
+      toggleTitleAndMenu() {
+        this.setMenuVisible(!this.menuVisible)
+      },
       prevPage() {
         if (this.rendition) {
-          this.rendition.prev()
+          this.rendition.prev().then(() => {
+            this.refreshLocation()
+          })
+          this.hideTitleAndMenu()
         }
       },
       nextPage() {
         if (this.rendition) {
-          this.rendition.next()
+          this.rendition.next().then(() => {
+            this.refreshLocation()
+          })
+          this.hideTitleAndMenu()
         }
       },
-      toggleTitleAndMenu() {
-        this.setMenuVisible(!this.menuVisible)
+      hideTitleAndMenu() {
+        this.setMenuVisible(false)
+        this.setSettingVisible(-1)
+        this.setFontFamilyVisible(false)
+      },
+      parseBook() {
+        this.book.loaded.cover.then(cover => {
+          this.book.archive.createUrl(cover).then(url => {
+            this.setCover(url)
+          })
+        })
+        this.book.loaded.metadata.then(metadata => {
+          this.setMetadata(metadata)
+        })
+        this.book.loaded.navigation.then(nav => {
+          const navItem = flatten(nav.toc)
+          navItem.forEach(item => {
+            item.level = find(item)
+          })
+          function find(item, level = 0) {
+            return !item.parent ? level : find(navItem.filter(parentItem => parentItem.id === item.parent)[0], ++level)
+          }
+          this.setNavigation(navItem)
+        })
       }
     }
   }

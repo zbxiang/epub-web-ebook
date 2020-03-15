@@ -31,6 +31,15 @@ const actions = {
   },
   setSection: ({ commit }, section) => {
     return commit('SET_SECTION', section)
+  },
+  setNavigation: ({ commit }, navigation) => {
+    return commit('SET_NAVIGATION', navigation)
+  },
+  setCover: ({ commit }, cover) => {
+    return commit('SET_COVER', cover)
+  },
+  setMetadata: ({ commit }, metadata) => {
+    return commit('SET_METADATA', metadata)
   }
 }
 

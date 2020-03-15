@@ -7,6 +7,12 @@
 <script>
   import Epub from 'epubjs'
   import { ebookMixin } from '@/utils/mixin'
+  import {
+    getLocation,
+    getFontSize,
+    getTheme,
+    saveTheme
+  } from '@/utils/localStorage'
 
   global.ePub = Epub
 
@@ -25,6 +31,12 @@
         this.setCurrentBook(this.book)
         this.initRendition()
         this.initGesture()
+        this.book.ready.then(() => {
+          return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
+        }).then(locations => {
+          this.setBookAvailable(true)
+          this.refreshLocation()
+        })
       },
       initRendition() {
         this.rendition = this.book.renderTo('read', {
@@ -32,7 +44,13 @@
           height: innerHeight,
           method: 'default'
         })
-        this.rendition.display()
+        const location = getLocation(this.fileName)
+        this.display(location, () => {
+          this.initTheme()
+          // this.initFontSize()
+          // this.initFontFamily()
+          // this.initGlobalStyle()
+        })
         this.rendition.hooks.content.register(contents => {
           Promise.all([
             contents.document.querySelector('.container').setAttribute('style', 'padding: 0'),
@@ -42,6 +60,18 @@
             contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
           ]).then(() => {})
         })
+      },
+      initTheme() {
+        let defaultTheme = getTheme(this.fileName)
+        if (!defaultTheme) {
+          defaultTheme = this.themeList[0].name
+          saveTheme(this.fileName, defaultTheme)
+        }
+        this.setDefaultTheme(defaultTheme)
+        this.themeList.forEach(theme => {
+          this.rendition.themes.register(theme.name, theme.style)
+        })
+        this.rendition.themes.select(defaultTheme)
       },
       initGesture() {
         this.rendition.on('touchstart', event => {

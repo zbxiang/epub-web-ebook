@@ -11,7 +11,8 @@
     getLocation,
     getFontSize,
     getTheme,
-    saveTheme
+    saveTheme,
+    saveFontSize
   } from '@/utils/localStorage'
 
   global.ePub = Epub
@@ -47,7 +48,7 @@
         const location = getLocation(this.fileName)
         this.display(location, () => {
           this.initTheme()
-          // this.initFontSize()
+          this.initFontSize()
           // this.initFontFamily()
           // this.initGlobalStyle()
         })
@@ -72,6 +73,15 @@
           this.rendition.themes.register(theme.name, theme.style)
         })
         this.rendition.themes.select(defaultTheme)
+      },
+      initFontSize() {
+        const fontSize = getFontSize(this.fileName)
+        if (!fontSize) {
+          saveFontSize(this.fileName, this.defaultFontSize)
+        } else {
+          this.rendition.themes.fontSize(fontSize)
+          this.setDefaultFontSize(fontSize)
+        }
       },
       initGesture() {
         this.rendition.on('touchstart', event => {
